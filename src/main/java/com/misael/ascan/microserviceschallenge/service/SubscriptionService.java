@@ -11,13 +11,16 @@ import reactor.core.publisher.Mono;
 @Component
 @Service
 public class SubscriptionService {
-
+    @Autowired
     SubscriptionRepository subscriptionRepository;
 
     public Mono<Subscription> save(Subscription subscription) {
         return Mono.just(subscriptionRepository.save(subscription));
     }
 
+    public Mono<Subscription> update(Subscription subscription) {
+        return Mono.just(subscriptionRepository.save(subscription));
+    }
     public Flux<Subscription> findAll() {
         return Flux.fromIterable(subscriptionRepository.findAll());
     }
