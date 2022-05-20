@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:14.3-alpine3.15
+    environment:
+      POSTGRES_USER: subscription_service
+      POSTGRES_PASSWORD: 92QMNMKVPee
+      POSTGRES_DB: subsservice
+    ports:
+      - 5431:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@email.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    ports:
+      - 3334:80
