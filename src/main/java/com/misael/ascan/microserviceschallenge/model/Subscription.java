@@ -1,14 +1,12 @@
 package com.misael.ascan.microserviceschallenge.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
