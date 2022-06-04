@@ -1,31 +1,36 @@
 package com.misael.ascan.microserviceschallenge.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+@Table("subscriptions.subscriptions")
 public class Subscription {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column("subscription_id")
     Integer id;
 
+    @Column("fk_user_id")
+    User user;
+
     @NonNull
-    @Column(name = "subscription_status")
-    @Enumerated(EnumType.STRING)
+    @Column("subscription_status")
     SubscriptionStatus subscriptionStatus;
 
     @NonNull
-    @Column(name = "dt_created_at")
+    @Column("created_at")
     Date createdAt;
 
     @NonNull
-    @Column(name = "dt_updated_at")
+    @Column("updated_at")
     Date updatedAt;
 }
