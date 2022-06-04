@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/subscription")
 public class SubscriptionController {
+
     @Autowired
     SubscriptionService subscriptionService;
 
