@@ -1,30 +1,31 @@
 package com.misael.ascan.microserviceschallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table("subscription.users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column("user_id")
     Integer id;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id")
-    Subscription subscription;
-
-    @Column(name = "nm_full_name")
+    @Column("full_name")
     String fullName;
 
-    @Column(name = "dt_created")
+    @Column("dt_created")
     Date created;
 }
