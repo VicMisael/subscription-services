@@ -1,18 +1,19 @@
 package com.misael.ascan.microserviceschallenge.repository;
 
 import com.misael.ascan.microserviceschallenge.model.Subscription;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
-import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Repository
-public interface SubscriptionRepository extends ReactiveCrudRepository<Subscription, Long> {
+public interface SubscriptionRepository {
 
-    @Override
-    <S extends Subscription> Mono<S> save(S entity);
 
-    Flux<Subscription> findAll();
+    public Mono<Subscription> insert(Subscription subscription);
 
-    Mono<Subscription> findById(Long id);
+    public Mono<Subscription> update(Subscription subscription);
+
+    public Mono<Subscription> getById(Long id);
+
+    public Flux<Subscription> findAll();
+
+    public Mono<Subscription> getByUserId(Long id);
 }

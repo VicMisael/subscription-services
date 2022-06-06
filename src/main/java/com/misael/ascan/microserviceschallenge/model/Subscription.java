@@ -17,7 +17,7 @@ import java.util.Date;
 public class Subscription {
     @Id
     @Column("subscription_id")
-    Integer id;
+    Long id;
 
     @Column("fk_user_id")
     User user;

@@ -21,7 +21,7 @@ public class User {
 
     @Id
     @Column("user_id")
-    Integer id;
+    Long id;
 
     @Column("full_name")
     String fullName;

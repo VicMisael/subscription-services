@@ -14,11 +14,11 @@ public class SubscriptionService {
     SubscriptionRepository subscriptionRepository;
 
     public Mono<Subscription> save(Subscription subscription) {
-        return subscriptionRepository.save(subscription);
+        return subscriptionRepository.insert(subscription);
     }
 
     public Mono<Subscription> update(Subscription subscription) {
-        return subscriptionRepository.save(subscription);
+        return subscriptionRepository.update(subscription);
     }
 
     public Flux<Subscription> findAll() {
