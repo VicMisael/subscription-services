@@ -20,12 +20,10 @@ public class UserDTO {
     String fullName;
 
     public User toUser() {
-        System.out.println(fullName);
         if(!fullName.isBlank())
             return User.builder().fullName(fullName).created(LocalDate.now()).build();
         else
             throw new RuntimeException("Name is empty");
     }
 
-    ;
 }

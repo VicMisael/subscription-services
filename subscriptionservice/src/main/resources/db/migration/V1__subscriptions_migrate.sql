@@ -10,7 +10,7 @@ create schema subscription
     create table if not exists subscription.subscriptions
     (
         subscription_id     SERIAL primary key,
-        user_id             SERIAL not null,
+        user_id             SERIAL not null unique,
         subscription_status varchar(100),
         created_at          date   not null,
         updated_at          date   not null,
