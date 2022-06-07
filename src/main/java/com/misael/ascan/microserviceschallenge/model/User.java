@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -18,7 +19,6 @@ import java.util.Date;
 @Table("subscription.users")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
-
     @Id
     @Column("user_id")
     Long id;
@@ -27,5 +27,5 @@ public class User {
     String fullName;
 
     @Column("dt_created")
-    Date created;
+    LocalDate created;
 }

@@ -2,6 +2,7 @@ package com.misael.ascan.microserviceschallenge.repository;
 
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
@@ -9,10 +10,12 @@ import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 @Service
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
-    @Autowired
-    private R2dbcEntityTemplate template;
+
+    private final R2dbcEntityTemplate template;
 
     @Override
     public Mono<User> insert(User user) {
