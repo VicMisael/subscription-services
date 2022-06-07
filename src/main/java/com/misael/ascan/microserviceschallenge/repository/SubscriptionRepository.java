@@ -5,8 +5,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface SubscriptionRepository {
-
-
     public Mono<Subscription> insert(Subscription subscription);
 
     public Mono<Subscription> update(Subscription subscription);

@@ -1,7 +1,7 @@
 package com.misael.ascan.microserviceschallenge.repository;
 
 import com.misael.ascan.microserviceschallenge.model.Subscription;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
@@ -10,10 +10,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
+@RequiredArgsConstructor
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
-    @Autowired
-    private R2dbcEntityTemplate template;
+    private final R2dbcEntityTemplate template;
+    private final UserRepository userRepository;
 
     @Override
     public Mono<Subscription> insert(Subscription subscription) {
@@ -37,6 +38,7 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
     @Override
     public Flux<Subscription> findAll() {
-        return template.select(Query.empty(), Subscription.class);
+        return template.select(Query.empty(), Subscription.class).flatMap(subscription ->
+                userRepository.getById(subscription.getId()).map(s -> subscription.withUser(s)));
     }
 }
