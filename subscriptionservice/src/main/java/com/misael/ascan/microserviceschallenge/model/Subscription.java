@@ -1,5 +1,6 @@
 package com.misael.ascan.microserviceschallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
@@ -8,7 +9,6 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -17,13 +17,13 @@ import java.util.Date;
 @Getter
 @Setter
 @Table("subscription.subscriptions")
+@JsonIgnoreProperties("userId")
 public class Subscription {
     @Id
     @Column("subscription_id")
     Long id;
 
     @Column("user_id")
-    @JsonIgnore
     Long userId;
 
     @With
