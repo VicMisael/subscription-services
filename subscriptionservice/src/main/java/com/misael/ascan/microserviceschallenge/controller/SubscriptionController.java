@@ -1,6 +1,5 @@
 package com.misael.ascan.microserviceschallenge.controller;
 
-import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.DTO.SubscriptionDTO;
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.service.SubscriptionService;
@@ -8,6 +7,7 @@ import com.misael.ascan.microserviceschallenge.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -30,7 +30,7 @@ public class SubscriptionController {
     public Mono<Subscription> addSubscription(@RequestBody SubscriptionDTO subscription) {
         return subscriptionService.save(subscription.toSubscription()).flatMap(subs ->
                         userService.getById(subs.getId()).map(subs::withUser))
-                .switchIfEmpty(Mono.error(new APIException(HttpStatus.BAD_REQUEST.value(), "Failed to Add Subscription")));
+                .switchIfEmpty(Mono.empty());
     }
 
     @PutMapping()
@@ -38,12 +38,14 @@ public class SubscriptionController {
     public Mono<Subscription> updateSubscription(@RequestBody SubscriptionDTO subscription) {
         return subscriptionService.update(subscription.toSubscription())
                 .flatMap(subs -> userService.getById(subs.getId()).map(subs::withUser)
-        );
+                );
     }
 
     @GetMapping("/single")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public Mono<Subscription> getById(@RequestParam Long id) {
-        return subscriptionService.find(id).switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "NOT FOUND")));
+        return subscriptionService.find(id).flatMap(subs ->
+                        userService.getById(subs.getId()).map(subs::withUser))
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found")));
     }
 }
