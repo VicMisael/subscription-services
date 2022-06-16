@@ -2,7 +2,6 @@ package com.misael.ascan.microserviceschallenge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -41,4 +40,5 @@ public class Subscription {
     @NonNull
     @Column("updated_at")
     LocalDate updatedAt;
+
 }
