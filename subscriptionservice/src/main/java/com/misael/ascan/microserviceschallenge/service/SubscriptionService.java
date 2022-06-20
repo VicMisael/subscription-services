@@ -30,14 +30,18 @@ public class SubscriptionService {
     }
 
     public Mono<Subscription> update(Subscription subscription) {
-        return subscriptionRepository.update(subscription).flatMap(subs ->
-                userService.getById(subs.getId()).map(subs::withUser)).map(completeSubscription -> {
-            try {
-                eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            return completeSubscription;
+        return this.find(subscription.getId()).flatMap(subs1 -> {
+            subs1.setSubscriptionStatus(subscription.getSubscriptionStatus());
+            subs1.setUpdatedAt(subscription.getUpdatedAt());
+            return subscriptionRepository.update(subs1).flatMap(subs2 ->
+                    userService.getById(subs2.getId()).map(subs2::withUser)).map(completeSubscription -> {
+                try {
+                    eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                return completeSubscription;
+            });
         });
     }
 

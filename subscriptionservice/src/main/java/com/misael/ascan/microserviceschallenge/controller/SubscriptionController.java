@@ -33,7 +33,7 @@ public class SubscriptionController {
     @PutMapping()
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Mono<Subscription> updateSubscription(@RequestBody SubscriptionDTO subscription) {
-        return subscriptionService.update(subscription.toSubscription());
+        return subscriptionService.update(subscription.updatableSubscription());
     }
 
     @GetMapping("/single")

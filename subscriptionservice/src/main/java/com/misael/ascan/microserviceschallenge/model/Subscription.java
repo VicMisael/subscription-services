@@ -31,11 +31,9 @@ public class Subscription {
     @Column("subscription_status")
     SubscriptionStatus subscriptionStatus;
 
-    @NonNull
     @Column("created_at")
     LocalDate createdAt;
 
-    @NonNull
     @Column("updated_at")
     LocalDate updatedAt;
 

@@ -3,15 +3,14 @@ package com.misael.ascan.microserviceschallenge.model.DTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.model.SubscriptionStatus;
-import com.misael.ascan.microserviceschallenge.model.User;
 import lombok.NonNull;
-import org.apache.tomcat.jni.Local;
-import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 public class SubscriptionDTO {
+
+    @JsonProperty("id")
+    Long id;
 
     @JsonProperty("status")
     SubscriptionStatus subscriptionStatus;
@@ -28,5 +27,9 @@ public class SubscriptionDTO {
                 .createdAt(LocalDate.now())
                 .updatedAt(LocalDate.now())
                 .build();
+    }
+
+    public Subscription updatableSubscription() {
+        return Subscription.builder().id(id).updatedAt(LocalDate.now()).subscriptionStatus(subscriptionStatus).build();
     }
 }
