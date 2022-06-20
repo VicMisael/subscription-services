@@ -13,8 +13,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
-@Setter
 @Table("subscription.subscriptions")
 @JsonIgnoreProperties("userId")
 public class Subscription {

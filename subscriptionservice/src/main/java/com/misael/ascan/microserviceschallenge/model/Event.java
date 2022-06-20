@@ -15,4 +15,15 @@ public class Event {
     String userName;
     SubscriptionStatus state;
     LocalDate alterDate;
+
+    public static Event fromCompleteSubscription(Subscription subscription) {
+        if (subscription.getUser() == null || subscription.getUserId()==null) {
+            throw new NullPointerException("Subscription.user can not be null");
+        }
+        return Event.builder().userId(subscription.getUserId())
+                .userName(subscription.getUser().getFullName())
+                .state(subscription.getSubscriptionStatus())
+                .alterDate(LocalDate.now())
+                .build();
+    }
 }
