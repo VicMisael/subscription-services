@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Event=require('./models/event.model.js')
-const consume=require('./kafka/event.consumer.js')
+const consume=require('./consumers/event.consumer.js')
 
 
 const app = express();
