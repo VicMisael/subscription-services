@@ -1,6 +1,5 @@
 package com.misael.ascan.microserviceschallenge.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.misael.ascan.microserviceschallenge.model.Event;
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.repository.SubscriptionRepository;
@@ -20,11 +19,7 @@ public class SubscriptionService {
     public Mono<Subscription> save(Subscription subscription) {
         return subscriptionRepository.insert(subscription).flatMap(subs ->
                 userService.getById(subs.getId()).map(subs::withUser)).map(completeSubscription -> {
-            try {
-                eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
             return completeSubscription;
         });
     }
@@ -35,11 +30,8 @@ public class SubscriptionService {
             subs1.setUpdatedAt(subscription.getUpdatedAt());
             return subscriptionRepository.update(subs1).flatMap(subs2 ->
                     userService.getById(subs2.getId()).map(subs2::withUser)).map(completeSubscription -> {
-                try {
-                    eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
+                eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
+
                 return completeSubscription;
             });
         });
