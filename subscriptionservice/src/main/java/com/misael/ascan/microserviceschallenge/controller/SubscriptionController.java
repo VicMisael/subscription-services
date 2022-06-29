@@ -1,5 +1,6 @@
 package com.misael.ascan.microserviceschallenge.controller;
 
+import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.DTO.SubscriptionDTO;
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.service.SubscriptionService;
@@ -27,7 +28,16 @@ public class SubscriptionController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Subscription> addSubscription(@RequestBody SubscriptionDTO subscription) {
-        return subscriptionService.save(subscription.toSubscription());
+        return subscriptionService.save(subscription.toSubscription()).onErrorMap(e -> {
+            if (e instanceof APIException) {
+                APIException exception = (APIException) e;
+                assert HttpStatus.resolve(exception.getStatus()) != null;
+                throw new ResponseStatusException(HttpStatus.resolve(exception.getStatus()), exception.getMessage());
+            } else {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL SERVER ERROR");
+            }
+
+        });
     }
 
     @PutMapping()

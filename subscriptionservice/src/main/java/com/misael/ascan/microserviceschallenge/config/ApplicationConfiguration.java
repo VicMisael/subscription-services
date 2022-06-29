@@ -20,11 +20,11 @@ public class ApplicationConfiguration extends AbstractR2dbcConfiguration {
     String host;
     @Value("${subscription.datasource.db.port}")
     String port;
-    @Value("subscription.datasource.db.name")
+    @Value("${subscription.datasource.db.name}")
     String dbname;
-    @Value("subscription.datasource.db.username")
+    @Value("${subscription.datasource.db.username}")
     String username;
-    @Value("subscription.datasource.db.password")
+    @Value("${subscription.datasource.db.password}")
     String password;
 
     @Value("${spring.profiles.active:}")

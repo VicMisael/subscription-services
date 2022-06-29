@@ -1,9 +1,13 @@
 package com.misael.ascan.microserviceschallenge.service;
 
+import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.Event;
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.repository.SubscriptionRepository;
+import io.r2dbc.postgresql.message.backend.ErrorResponse;
+import io.r2dbc.spi.R2dbcDataIntegrityViolationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,6 +25,13 @@ public class SubscriptionService {
                 userService.getById(subs.getId()).map(subs::withUser)).map(completeSubscription -> {
             eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
             return completeSubscription;
+        }).onErrorMap(e->{
+            e.printStackTrace();
+            if(e instanceof DataIntegrityViolationException){
+                throw new APIException(400,"Houve uma falha na integridade dos dados", java.util.Optional.of(e));
+            }else{
+                throw new APIException(500,"ERRO DE SERVIDOR", java.util.Optional.of(e));
+            }
         });
     }
 
