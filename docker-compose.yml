@@ -1,9 +1,5 @@
 version: "3.7"
 
-networks:
-  kafka-net:
-      name: kafka-net
-      driver: bridge
 
 services:
 
@@ -28,8 +24,6 @@ services:
     image: zookeeper:3.7.0
     container_name: zookeeper
     restart: "no"
-    networks:
-      - kafka-net
     ports:
       - "2181:2181"
 
@@ -37,8 +31,6 @@ services:
     image: obsidiandynamics/kafka
     container_name: kafka
     restart: "no"
-    networks:
-      - kafka-net
     ports:
       - "9092:9092"
     environment:
@@ -56,11 +48,21 @@ services:
     image: obsidiandynamics/kafdrop
     container_name: kafdrop
     restart: "no"
-    networks:
-      - kafka-net
     ports:
       - "9000:9000"
     environment:
       KAFKA_BROKERCONNECT: "kafka:29092"
     depends_on:
       - "kafka"
+  subscriptionservice:
+      build: ./subscriptionservice
+      ports:
+        - "8030:8080"
+      environment:
+        SPRING_PROFILES_ACTIVE: dockerized
+        POSTGRES_HOST: postgres
+        KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      depends_on:
+        - "postgres"
+        - "kafka"
+      

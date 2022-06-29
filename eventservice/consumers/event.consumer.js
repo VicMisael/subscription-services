@@ -15,7 +15,7 @@ const consume=async ()=>{
         eachMessage:({message})=>{
             console.log(`received message: ${message.value}`)
             const obj=JSON.parse(message.value);
-            console.log(`received message: ${JSON.parse(message.value)}`)
+            //console.log(`received message: ${JSON.parse(message.value)}`)
             Event.create({userId:obj.userId,userName:obj.userName,state:obj.state,alterDate:obj.alterDate})
         }
     })
