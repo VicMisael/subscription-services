@@ -1,0 +1,11 @@
+{
+  "name": "apigateway",
+  "version": "1.0.0",
+  "description": "Api gateway for subscription and eventservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

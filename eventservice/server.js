@@ -8,7 +8,9 @@ const app = express();
 
 app.use(express.json());
 
-mongoose.connect('mongodb://event_service:Y585wKkKZp95xrwq@localhost:27018')
+const MONGO_ADDRESS=process.env.MONGO_DB
+
+mongoose.connect('mongodb://event_service:Y585wKkKZp95xrwq@'+MONGO_ADDRESS)
 
 app.listen(3000, () => {
     console.log(`Server Started at ${3000}`)
