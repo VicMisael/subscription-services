@@ -57,7 +57,7 @@ services:
   subscriptionservice:
       build: ./subscriptionservice
       ports:
-        - 8030:8080
+        - 8081:8080
       environment:
         SPRING_PROFILES_ACTIVE: dockerized
         POSTGRES_HOST: postgres
@@ -72,11 +72,18 @@ services:
         KAFKA_BROKER: kafka:29092
         MONGO_DB: mongo:27017
       ports:
-        - 8081:3000
+        - 8082:3000
       depends_on:
         - kafka
         - mongo
         - subscriptionservice
   servicesgateway:
-    
-      
+    build: ./apigateway
+    ports:
+      - 8080:3050
+    environment:
+      EVENTSERVICE_ADDRESS: http://eventservice:3000
+      SUBSCRIPTIONSERVICE_ADDRESS: http://subscriptionservice:8080
+    depends_on:
+      - eventservice
+      - subscriptionservice
