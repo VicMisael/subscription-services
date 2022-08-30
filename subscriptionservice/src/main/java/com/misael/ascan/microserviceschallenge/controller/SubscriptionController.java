@@ -46,9 +46,9 @@ public class SubscriptionController {
         return subscriptionService.update(subscription.updatableSubscription());
     }
 
-    @GetMapping("/single")
+    @GetMapping("/{id}}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<Subscription> getById(@RequestParam Long id) {
+    public Mono<Subscription> getById(@PathVariable Long id) {
         return subscriptionService.find(id)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found")));
     }
