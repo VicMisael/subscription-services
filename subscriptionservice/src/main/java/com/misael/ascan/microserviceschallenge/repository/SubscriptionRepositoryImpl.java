@@ -38,7 +38,10 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
     @Override
     public Flux<Subscription> findAll() {
-        return template.select(Query.empty(), Subscription.class).flatMap(subscription ->
-                userRepository.getById(subscription.getId()).map(s -> subscription.withUser(s)));
+        return template.getDatabaseClient().sql("select * " +
+                "from TABLE subscription.subscriptions " +
+                "INNER JOIN subscription.users on subscription.users.user_id=subscription.subscriptions.user_id").map(Subscription::fromRow).all();
+//        return template.select(Query.empty(), Subscription.class).flatMap(subscription ->
+//                userRepository.getById(subscription.getId()).map(subscription::withUser));
     }
 }

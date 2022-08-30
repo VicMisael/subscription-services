@@ -1,9 +1,7 @@
 package com.misael.ascan.microserviceschallenge.repository;
 
-import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
@@ -29,11 +27,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Mono<User> getById(Long id) {
-        return template.selectOne(Query.query(Criteria.where("user_id").is(id)), User.class);
+        return template.selectOne(Query
+                .query(Criteria.where("user_id").is(id)), User.class);
     }
 
     @Override
     public Flux<User> findAll() {
-        return template.select(Query.empty(),User.class);
+        return template.select(Query.empty(), User.class);
     }
 }
