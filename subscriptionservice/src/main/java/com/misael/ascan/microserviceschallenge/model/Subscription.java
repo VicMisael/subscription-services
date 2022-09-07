@@ -42,8 +42,8 @@ public class Subscription {
 
     public static Subscription fromRow(Row row) {
         return Subscription.builder()
-                .id(row.get("susbcription_id", Long.class))
-                .subscriptionStatus(Objects.requireNonNull(row.get("subscription_status", SubscriptionStatus.class)))
+                .id(row.get("subscription_id", Long.class))
+                .subscriptionStatus(Objects.requireNonNull(SubscriptionStatus.valueOf(row.get("subscription_status", String.class))))
                 .createdAt(row.get("created_at", LocalDate.class))
                 .updatedAt(row.get("updated_at", LocalDate.class))
                 .user(User.builder()

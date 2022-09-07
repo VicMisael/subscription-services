@@ -1,6 +1,6 @@
 package com.service;
 
-import com.misael.ascan.microserviceschallenge.subscriptionService;
+import com.misael.ascan.microserviceschallenge.DemoApplication;
 import com.misael.ascan.microserviceschallenge.repository.SubscriptionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import reactor.test.StepVerifier;
 
 
 @SpringBootTest(
-        classes = subscriptionService.class)
+        classes = DemoApplication.class)
 public class SubscriptionTest {
 
     @Autowired
