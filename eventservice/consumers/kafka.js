@@ -4,7 +4,7 @@ const KAFKA_BROKER=process.env.KAFKA_BROKER;
 
 const kafka = new Kafka({
   clientId: 'eventConsumer',
-  brokers: [KAFKA_BROKER],
+  brokers: [KAFKA_BROKER==null?"127.0.0.1:9092":KAFKA_BROKER],
 })
 
 const producer = kafka.producer()

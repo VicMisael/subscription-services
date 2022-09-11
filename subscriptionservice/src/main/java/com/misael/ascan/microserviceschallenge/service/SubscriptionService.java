@@ -28,7 +28,7 @@ public class SubscriptionService {
         }).onErrorMap(e->{
             e.printStackTrace();
             if(e instanceof DataIntegrityViolationException){
-                throw new APIException(400,"Houve uma falha na integridade dos dados", java.util.Optional.of(e));
+                throw new APIException(409,"Houve uma falha na integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário", java.util.Optional.of(e));
             }else{
                 throw new APIException(500,"ERRO DE SERVIDOR", java.util.Optional.of(e));
             }

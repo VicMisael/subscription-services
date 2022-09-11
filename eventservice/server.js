@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-const MONGO_ADDRESS=process.env.MONGO_DB
+const MONGO_ADDRESS=process.env.MONGO_DB==null?"localhost:27018":process.env.MONGO_DB
 
 mongoose.connect('mongodb://event_service:Y585wKkKZp95xrwq@'+MONGO_ADDRESS)
 
@@ -17,6 +17,7 @@ app.listen(3000, () => {
 })
 
 app.get('/all',async (req,res)=>{
+    console.log("received")
     try{
     const data=await Event.find();
     res.json(data)
