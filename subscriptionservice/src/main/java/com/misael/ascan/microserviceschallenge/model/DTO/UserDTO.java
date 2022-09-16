@@ -1,6 +1,7 @@
 package com.misael.ascan.microserviceschallenge.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.User;
 import lombok.*;
 
@@ -20,10 +21,10 @@ public class UserDTO {
     String fullName;
 
     public User toUser() {
-        if(!fullName.isBlank())
+        if (fullName != null && !fullName.isBlank())
             return User.builder().fullName(fullName).created(LocalDate.now()).build();
         else
-            throw new RuntimeException("Name is empty");
+            throw new APIException(404, "Name is empty", null);
     }
 
 }

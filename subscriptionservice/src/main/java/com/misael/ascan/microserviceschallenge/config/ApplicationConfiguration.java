@@ -3,6 +3,7 @@ package com.misael.ascan.microserviceschallenge.config;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,7 @@ public class ApplicationConfiguration extends AbstractR2dbcConfiguration {
 
     @Override
     @Bean
+    @NonNull
     public ConnectionFactory connectionFactory() {
         log.error("Active Profile:" + activeProfile);
         return new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration

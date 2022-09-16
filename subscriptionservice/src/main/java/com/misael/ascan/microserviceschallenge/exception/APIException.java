@@ -8,13 +8,32 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 public class APIException extends RuntimeException {
-    private int status;
-    private String message;
-    Optional<Throwable> reason;
+    private final int status;
+    private final String message;
+    private final Optional<Throwable> reason;
+    public APIException(){
+        super();
+        this.status=500;
+        this.message="";
+        this.reason=Optional.empty();
+    }
+    public APIException(String message,Optional<Throwable> reason)
+    {
+        super(message);
+        this.status=500;
+        this.message=message;
+        this.reason=reason;
+    }
+
+    public APIException(int status, String message, Optional<Throwable> reason) {
+        super(message);
+        this.message=message;
+        this.reason=reason;
+        this.status=status;
+    }
+
 
     public byte[] asBytes(){
         String response = "{ \"status\": " +

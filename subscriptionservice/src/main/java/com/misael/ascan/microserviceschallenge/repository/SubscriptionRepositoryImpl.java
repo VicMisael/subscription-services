@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
 
     private final R2dbcEntityTemplate template;
-    private final UserRepository userRepository;
 
     @Override
     public Mono<Subscription> insert(Subscription subscription) {
@@ -41,7 +40,5 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
         return template.getDatabaseClient().sql("select * " +
                 "from subscription.subscriptions " +
                 "NATURAL JOIN subscription.users").map(Subscription::fromRow).all();
-//        return template.select(Query.empty(), Subscription.class).flatMap(subscription ->
-//                userRepository.getById(subscription.getId()).map(subscription::withUser));
     }
 }

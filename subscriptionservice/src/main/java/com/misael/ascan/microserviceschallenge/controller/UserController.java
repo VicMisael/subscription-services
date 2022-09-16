@@ -1,6 +1,8 @@
 package com.misael.ascan.microserviceschallenge.controller;
 
+import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.DTO.UserDTO;
+import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.model.User;
 import com.misael.ascan.microserviceschallenge.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,13 @@ public class UserController {
         return userService.addUser(user.toUser());
     }
 
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Mono<User> getById(@PathVariable Long id) {
+        return userService.getById(id)
+                .switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "User not found",null)));
+    }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Flux<User> findAll(){

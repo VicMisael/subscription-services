@@ -54,18 +54,18 @@ services:
       KAFKA_BROKERCONNECT: "kafka:29092"
     depends_on:
       - "kafka"
-  # subscriptionservice:
-  #     build: ./subscriptionservice
-  #     ports:
-  #       - 8081:8080
-  #     environment:
-  #       SPRING_PROFILES_ACTIVE: dockerized
-  #       POSTGRES_HOST: postgres
-  #       POSTGRES_PORT: 5432
-  #       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-  #     depends_on:
-  #       - "postgres"
-  #       - "kafka"
+  subscriptionservice:
+      build: ./subscriptionservice
+      ports:
+        - 8081:8080
+      environment:
+        SPRING_PROFILES_ACTIVE: dockerized
+        POSTGRES_HOST: postgres
+        POSTGRES_PORT: 5432
+        KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      depends_on:
+        - "postgres"
+        - "kafka"
   eventservice:
       build: ./eventservice
       environment:

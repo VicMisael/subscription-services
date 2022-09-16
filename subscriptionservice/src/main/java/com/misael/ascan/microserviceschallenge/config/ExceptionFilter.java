@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
+import org.springframework.web.server.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -33,9 +31,12 @@ public class ExceptionFilter implements WebFilter {
                 .onErrorResume(e -> {
                     if (e instanceof APIException) {
                         return answerWithException((APIException) e, exchange);
+                    } else if (e instanceof ResponseStatusException) {
+                        return answerWithException(
+                                new APIException(((ResponseStatusException) e).getStatus().value(), ((ResponseStatusException) e).getStatus().name(), Optional.of((e))), exchange);
                     } else {
                         log.error("Internal Server Error: ", e);
-                        return answerWithException(new APIException(500, "Erro de servidor", Optional.of(e)), exchange);
+                        return answerWithException(new APIException(500, "Erro de servidor contate a administração", Optional.of(e)), exchange);
                     }
                 });
     }

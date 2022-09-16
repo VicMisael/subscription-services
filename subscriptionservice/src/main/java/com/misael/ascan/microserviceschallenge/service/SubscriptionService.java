@@ -26,11 +26,11 @@ public class SubscriptionService {
             eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
             return completeSubscription;
         }).onErrorMap(e->{
-            e.printStackTrace();
             if(e instanceof DataIntegrityViolationException){
-                throw new APIException(409,"Houve uma falha na integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário", java.util.Optional.of(e));
+                throw new APIException(409,"Houve uma falha na integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário ou se o usuário existe" +
+                        "", java.util.Optional.of(e));
             }else{
-                throw new APIException(500,"ERRO DE SERVIDOR", java.util.Optional.of(e));
+                throw new APIException(500,"ERRO DE SERVIDOR"+ e.getMessage(), java.util.Optional.of(e));
             }
         });
     }

@@ -28,16 +28,7 @@ public class SubscriptionController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Subscription> addSubscription(@RequestBody SubscriptionDTO subscription) {
-        return subscriptionService.save(subscription.toSubscription()).onErrorMap(e -> {
-            if (e instanceof APIException) {
-                APIException exception = (APIException) e;
-                assert HttpStatus.resolve(exception.getStatus()) != null;
-                throw new ResponseStatusException(HttpStatus.resolve(exception.getStatus()), exception.getMessage());
-            } else {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL SERVER ERROR");
-            }
-
-        });
+        return subscriptionService.save(subscription.toSubscription());
     }
 
     @PutMapping()
@@ -50,6 +41,6 @@ public class SubscriptionController {
     @ResponseStatus(HttpStatus.OK)
     public Mono<Subscription> getById(@PathVariable Long id) {
         return subscriptionService.find(id)
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Subscription not found")));
+                .switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "Subscription not found",null)));
     }
 }
