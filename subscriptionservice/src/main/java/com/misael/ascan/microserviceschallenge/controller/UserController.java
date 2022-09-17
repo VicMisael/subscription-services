@@ -2,7 +2,6 @@ package com.misael.ascan.microserviceschallenge.controller;
 
 import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.DTO.UserDTO;
-import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.model.User;
 import com.misael.ascan.microserviceschallenge.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public Mono<User> getById(@PathVariable Long id) {
         return userService.getById(id)
-                .switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "User not found",null)));
+                .switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "User not found", Optional.empty())));
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
