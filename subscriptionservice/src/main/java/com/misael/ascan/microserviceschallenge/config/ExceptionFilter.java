@@ -4,6 +4,7 @@ import com.misael.ascan.microserviceschallenge.exception.APIException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.*;
 import reactor.core.publisher.Flux;
@@ -34,7 +35,12 @@ public class ExceptionFilter implements WebFilter {
                     } else if (e instanceof ResponseStatusException) {
                         return answerWithException(
                                 new APIException(((ResponseStatusException) e).getStatus().value(), ((ResponseStatusException) e).getStatus().name(), Optional.of((e))), exchange);
+                    } else if (e instanceof DataIntegrityViolationException) {
+                        return answerWithException(
+                                new APIException(409, "Houve uma falha na integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário ou se o usuário existe" +
+                                        "", java.util.Optional.of(e)),exchange);
                     } else {
+
                         log.error("Internal Server Error: ", e);
                         return answerWithException(new APIException(500, "Erro de servidor contate a administração", Optional.of(e)), exchange);
                     }
