@@ -7,5 +7,4 @@ FROM adoptopenjdk/openjdk11
 # COPY --from=build /usr/src/app/target/subscription-0.0.1.jar /usr/app/subscription-0.0.1.jar
 # COPY ./target/subscription-0.0.1.jar /usr/app/subscription-0.0.1.jar
 COPY target/subscription-0.0.1.jar /usr/app/subscription-0.0.1.jar
-EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/app/subscription-0.0.1.jar"]
