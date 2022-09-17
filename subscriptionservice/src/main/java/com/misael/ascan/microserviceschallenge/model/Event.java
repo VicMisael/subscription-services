@@ -20,7 +20,7 @@ public class Event {
         if (subscription.getUser() == null) {
             throw new NullPointerException("Subscription.user can not be null");
         }
-        return Event.builder().userId(subscription.getUserId())
+        return Event.builder().userId(subscription.user.getId())
                 .userName(subscription.getUser().getFullName())
                 .state(subscription.getSubscriptionStatus())
                 .alterDate(LocalDate.now())
