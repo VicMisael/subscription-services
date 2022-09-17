@@ -17,7 +17,7 @@ public class SubscriptionTest {
 
     @Test
     public void getEmailByIdTest() {
-        StepVerifier.create(subscriptionRepository.getById(1L)).expectComplete();
+        StepVerifier.create(subscriptionRepository.getCompleteSubscriptionById(1L)).expectComplete();
 
     }
 
