@@ -28,7 +28,7 @@ public class ExceptionFilter implements WebFilter {
     }
 
     @Override
-    public Mono<Void> filter( ServerWebExchange exchange, WebFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         return chain.filter(exchange)
                 .onErrorResume(e -> {
                     if (e instanceof APIException) {
@@ -40,7 +40,11 @@ public class ExceptionFilter implements WebFilter {
                         return answerWithException(
                                 new APIException(409, "Houve uma falha na " +
                                         "integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário ou se o usuário existe"
-                                        , java.util.Optional.of(e)),exchange);
+                                        , java.util.Optional.of(e)), exchange);
+                    } else if (e instanceof IllegalArgumentException) {
+                        return answerWithException(
+                                new APIException(404, "Verifique a requisição"
+                                        , java.util.Optional.of(e)), exchange);
                     } else {
 
                         log.error("Internal Server Error: ", e);
