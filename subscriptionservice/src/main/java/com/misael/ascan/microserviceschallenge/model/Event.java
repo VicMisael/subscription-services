@@ -17,7 +17,7 @@ public class Event {
     LocalDate alterDate;
 
     public static Event fromCompleteSubscription(Subscription subscription) {
-        if (subscription.getUser() == null || subscription.getUserId()==null) {
+        if (subscription.getUser() == null) {
             throw new NullPointerException("Subscription.user can not be null");
         }
         return Event.builder().userId(subscription.getUserId())

@@ -10,6 +10,7 @@ public interface SubscriptionRepository {
     public Mono<Subscription> update(Subscription subscription);
 
     public Mono<Subscription> getById(Long id);
+    public Mono<Subscription> getCompleteSubscriptionById(Long id);
 
     public Flux<Subscription> findAll();
 

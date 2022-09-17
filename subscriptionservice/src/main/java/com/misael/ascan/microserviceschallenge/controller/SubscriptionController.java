@@ -34,13 +34,13 @@ public class SubscriptionController {
     @PutMapping()
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Mono<Subscription> updateSubscription(@RequestBody SubscriptionDTO subscription) {
-        return subscriptionService.update(subscription.updatableSubscription());
+        return subscriptionService.update(subscription.updatableSubscription())
+                .switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "Subscription not found",null)));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Subscription> getById(@PathVariable Long id) {
-        return subscriptionService.find(id)
-                .switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "Subscription not found",null)));
+        return subscriptionService.find(id).switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "Subscription not found",null)));
     }
 }

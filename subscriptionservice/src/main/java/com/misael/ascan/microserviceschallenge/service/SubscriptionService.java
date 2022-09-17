@@ -4,13 +4,13 @@ import com.misael.ascan.microserviceschallenge.exception.APIException;
 import com.misael.ascan.microserviceschallenge.model.Event;
 import com.misael.ascan.microserviceschallenge.model.Subscription;
 import com.misael.ascan.microserviceschallenge.repository.SubscriptionRepository;
-import io.r2dbc.postgresql.message.backend.ErrorResponse;
-import io.r2dbc.spi.R2dbcDataIntegrityViolationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,37 +25,33 @@ public class SubscriptionService {
                 userService.getById(subs.getId()).map(subs::withUser)).map(completeSubscription -> {
             eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
             return completeSubscription;
-        }).onErrorMap(e->{
-            if(e instanceof DataIntegrityViolationException){
-                throw new APIException(409,"Houve uma falha na integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário ou se o usuário existe" +
-                        "", java.util.Optional.of(e));
-            }else{
-                throw new APIException(500,"ERRO DE SERVIDOR"+ e.getMessage(), java.util.Optional.of(e));
-            }
-        });
+        }).onErrorMap(e -> e);
     }
 
     public Mono<Subscription> update(Subscription subscription) {
-        return this.find(subscription.getId()).flatMap(subs1 -> {
-            subs1.setSubscriptionStatus(subscription.getSubscriptionStatus());
-            subs1.setUpdatedAt(subscription.getUpdatedAt());
-            return subscriptionRepository.update(subs1).flatMap(subs2 ->
-                    userService.getById(subs2.getId()).map(subs2::withUser)).map(completeSubscription -> {
-                eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
-
-                return completeSubscription;
-            });
-        });
+        return this.findSimple(subscription.getId())
+                .flatMap(subs -> {
+                            subs.setUpdatedAt(subscription.getUpdatedAt());
+                            subs.setSubscriptionStatus(subscription.getSubscriptionStatus());
+                            return subscriptionRepository.update(subs).flatMap(result -> this.find(result.getId()).map(subscription1 -> {
+                                eventService.createEvent(Event.fromCompleteSubscription(subscription1));
+                                return subscription1;
+                            })).onErrorMap(e -> e);
+                        }
+                ).switchIfEmpty(Mono.empty());
     }
 
     public Flux<Subscription> findAll() {
         return subscriptionRepository.findAll();
     }
 
-    public Mono<Subscription> find(Long id) {
-        return subscriptionRepository.getById(id).flatMap(subs ->
-                        userService.getById(subs.getId()).map(subs::withUser))
+    public Mono<Subscription> findSimple(Long id) {
+        return subscriptionRepository.getById(id)
                 .switchIfEmpty(Mono.empty());
+    }
+
+    public Mono<Subscription> find(Long id) {
+        return subscriptionRepository.getCompleteSubscriptionById(id);
     }
 
 }

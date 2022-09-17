@@ -31,6 +31,13 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
     }
 
     @Override
+    public Mono<Subscription> getCompleteSubscriptionById(Long id) {
+        final String sql = "select * from subscription.subscriptions NATURAL JOIN subscription.users where subscription.subscriptions.subscription_id = " +id;
+       return template.getDatabaseClient().sql(sql).map(Subscription::fromRow).one();
+        //return template.selectOne(Query.query(Criteria.where("subscription_id").is(id)), Subscription.class);
+    }
+
+    @Override
     public Mono<Subscription> getByUserId(Long id) {
         return template.selectOne(Query.query(Criteria.where("user_id").is(id)), Subscription.class);
     }
