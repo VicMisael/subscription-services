@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "bd7b6f7a-00f1-4b8a-8bde-4ad4b18fb713",
+		"name": "MicroservicesAscan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21306441"
+	},
+	"item": [
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullname\":\"João Gomes\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SubscriptionService}}/user",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SubscriptionService}}/user",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get single user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SubscriptionService}}/user/2",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Subscription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SubscriptionService}}/subscription/4",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"subscription",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscription Without Subscription Status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\":3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SubscriptionService}}/subscription",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Subscriptions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SubscriptionService}}/subscription/",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"subscription",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleSubscription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SubscriptionService}}/subscription/",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"subscription",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscription with status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userid\":2,\r\n    \"status\":\"SUBSCRIPTION_PURCHASED\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SubscriptionService}}/subscription",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\"id\": 9,\r\n    \"status\": \"SUBSCRIPTION_RESTART\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SubscriptionService}}/subscription",
+					"host": [
+						"{{SubscriptionService}}"
+					],
+					"path": [
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ler eventos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{EventService}}/all",
+					"host": [
+						"{{EventService}}"
+					],
+					"path": [
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "non-dockerized",
+			"value": "http://localhost:8080"
+		}
+	]
+}
