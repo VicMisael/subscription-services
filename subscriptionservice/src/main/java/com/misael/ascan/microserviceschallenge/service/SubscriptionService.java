@@ -18,14 +18,13 @@ public class SubscriptionService {
 
     private final EventService eventService;
     private final SubscriptionRepository subscriptionRepository;
-    private final UserService userService;
 
     public Mono<Subscription> save(Subscription subscription) {
         return subscriptionRepository.insert(subscription).flatMap(subs ->
-                userService.getById(subs.getId()).map(subs::withUser)).map(completeSubscription -> {
+                find(subs.getId()).map(completeSubscription -> {
             eventService.createEvent(Event.fromCompleteSubscription(completeSubscription));
             return completeSubscription;
-        }).onErrorMap(e -> e);
+        }).onErrorMap(e -> e));
     }
 
     public Mono<Subscription> update(Subscription subscription) {
