@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.annotation.NonNullApi;
 
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class ExceptionFilter implements WebFilter {
     }
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+    public Mono<Void> filter( ServerWebExchange exchange, WebFilterChain chain) {
         return chain.filter(exchange)
                 .onErrorResume(e -> {
                     if (e instanceof APIException) {
@@ -37,8 +38,9 @@ public class ExceptionFilter implements WebFilter {
                                 new APIException(((ResponseStatusException) e).getStatus().value(), ((ResponseStatusException) e).getStatus().name(), Optional.of((e))), exchange);
                     } else if (e instanceof DataIntegrityViolationException) {
                         return answerWithException(
-                                new APIException(409, "Houve uma falha na integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário ou se o usuário existe" +
-                                        "", java.util.Optional.of(e)),exchange);
+                                new APIException(409, "Houve uma falha na " +
+                                        "integridade dos dados, cheque se o dado já não foi cadastrado para esse usuário ou se o usuário existe"
+                                        , java.util.Optional.of(e)),exchange);
                     } else {
 
                         log.error("Internal Server Error: ", e);

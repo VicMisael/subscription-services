@@ -7,9 +7,10 @@ import com.misael.ascan.microserviceschallenge.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/subscription")
@@ -41,6 +42,6 @@ public class SubscriptionController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<Subscription> getById(@PathVariable Long id) {
-        return subscriptionService.find(id).switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "Subscription not found",null)));
+        return subscriptionService.find(id).switchIfEmpty(Mono.error(new APIException(HttpStatus.NOT_FOUND.value(), "Subscription not found", Optional.empty())));
     }
 }
