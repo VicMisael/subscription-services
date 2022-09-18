@@ -37,7 +37,7 @@ public class SubscriptionService {
                                 return subscription1;
                             })).onErrorMap(e -> e);
                         }
-                ).switchIfEmpty(Mono.empty());
+                );
     }
 
     public Flux<Subscription> findAll() {
