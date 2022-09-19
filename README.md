@@ -4,13 +4,13 @@
 ![SQL](https://img.shields.io/badge/-Postgres-lightgrey)
 ![node](https://img.shields.io/badge/-NodeJS-green)
  
- Este projeto consiste em um serviço de inscrição com as funcionalidades de cadastro de usuários e subscriptions junto à possibilidade de editar essas subscriptions, sendo as mesmas logadas e persistidas em um banco noSQL
+ Este projeto consiste em um serviço de inscrição com as funcionalidades de cadastro de usuários e registros de subscriptions junto à possibilidade de edição, sendo as mesmas logadas e persistidas no postgreSQL e em Banco NoSQL.
 
 ## Rodando a aplicação
 Pré Requisitos:
-* Java 11 JDK 
-* Maven
-* Docker
+* [Java 11 JDK](https://adoptium.net/download) 
+* [Maven 3.8.6](https://maven.apache.org/install.html)
+* [Docker](https://docs.docker.com/get-docker/)
 ## Como rodar:
 ```console
 git clone https://github.com/VicMisael/Microservicesascan
