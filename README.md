@@ -5,6 +5,10 @@ Pré Requisitos:
 * Java 11 JDK 
 * Maven
 * Docker
-Como rodar:
+## Como rodar:
+```console
+
 mvn -f './subscriptionservice/pom.xml' -B -DskipTests=true clean package
 docker-compose up
+
+```
