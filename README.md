@@ -13,7 +13,8 @@ Pré Requisitos:
 * Docker
 ## Como rodar:
 ```console
-
+git clone https://github.com/VicMisael/Microservicesascan
+cd Microservicesascan
 mvn -f './subscriptionservice/pom.xml' -B -DskipTests=true clean package
 docker-compose up
 
